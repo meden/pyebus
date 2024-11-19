@@ -776,15 +776,15 @@ class DateTimeType(Type):
     >>> t
     DateTimeType()
     >>> t.comment
-    'DAY.MONTH.YEAR HOUR:MINUTE:SECOND'
-    >>> t.decode('30.12.2020 23:59:59')
-    DateTime(2020, 12, 30, 23, 59, 59)
+    'DAY.MONTH.YEAR HOUR:MINUTE'
+    >>> t.decode('30.12.2020 23:59')
+    DateTime(2020, 12, 30, 23, 59)
     >>> t.decode('-.-.- -:-:-') is None
     True
-    >>> t.encode('30.12.2020 23:59:59')
-    '30.12.2020 23:59:59'
-    >>> t.encode(DateTime(2020, 12, 30, 23, 59, 59))
-    '30.12.2020 23:59:59'
+    >>> t.encode('30.12.2020 23:59')
+    '30.12.2020 23:59'
+    >>> t.encode(DateTime(2020, 12, 30, 23, 59))
+    '30.12.2020 23:59'
     >>> t.encode(None)
     '-.-.- -:-:-'
     """
@@ -794,21 +794,21 @@ class DateTimeType(Type):
     def decode(self, value):
         """Decode `value`."""
         if value != self._NONE:
-            return DateTime.strptime(value, "%d.%m.%Y %H:%M:%S")
+            return DateTime.strptime(value, "%d.%m.%Y %H:%M")
         return None
 
     def encode(self, value):
         """Encode `value`."""
         if isinstance(value, str):
-            value = DateTime.strptime(value, "%d.%m.%Y %H:%M:%S")
+            value = DateTime.strptime(value, "%d.%m.%Y %H:%M")
         if value is not None:
-            return f"{value.day}.{value.month}.{value.year} {value.hour:02d}:{value.minute:02d}:{value.second:02d}"
+            return f"{value.day}.{value.month}.{value.year} {value.hour:02d}:{value.minute:02d}"
         return self._NONE
 
     @property
     def comment(self):
         """Get Comment on allowed values."""
-        return "DAY.MONTH.YEAR HOUR:MINUTE:SECOND"
+        return "DAY.MONTH.YEAR HOUR:MINUTE"
 
 
 class WeekdayType(Type):
@@ -871,15 +871,15 @@ class DateTime(datetime.datetime):
     """
     DateTime.
 
-    >>> t = DateTime(2020, 12, 31, 23, 59, 59)
+    >>> t = DateTime(2020, 12, 31, 23, 59)
     >>> t
-    DateTime(2020, 12, 31, 23, 59, 59)
+    DateTime(2020, 12, 31, 23, 59)
     >>> str(t)
-    '31.12.2020 23:59:59'
+    '31.12.2020 23:59'
     """
 
     def __str__(self):
-        return self.strftime("%d.%m.%Y %H:%M:%S")
+        return self.strftime("%d.%m.%Y %H:%M")
 
 
 class Time(datetime.time):

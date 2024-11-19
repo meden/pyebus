@@ -11,11 +11,13 @@ TYPEMAP = {
     # HDA       hex date                      dd.mm.yyyy               day first, including weekday, Sunday=0x07
     # HDA:3     hex date                      dd.mm.yyyy               day first, excluding weekday
     # DAY       date in days                  dd.mm.yyyy               days since 01.01.1900
+    # DTM       date with minutes             dd.mm.yyyy hh:mm         date+time in minutes since 01.01.2009
     "BDA": types.DateType(),
     "BDA:3": types.DateType(),
     "HDA": types.DateType(),
     "HDA:3": types.DateType(),
     "DAY": types.DateType(),
+    "DTM": types.DateTimeType(),
     # BTI       BCD time                      hh:mm:ss                 seconds first
     # HTI       hex time                      hh:mm:ss                 hours first
     # VTI       hex time                      hh:mm:ss                 seconds first
@@ -135,6 +137,8 @@ def decode_type(typecode, divider=None):
     DateType()
     >>> decode_type("DAY")
     DateType()
+    >>> decode_type("DTM")
+    DateTimeType()
     >>> decode_type("BTI")
     TimeType()
     >>> decode_type("HTI")
